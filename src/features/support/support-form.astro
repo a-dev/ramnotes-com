@@ -1,0 +1,187 @@
+---
+import NoteCard from "../../shared/ui/note-card.astro";
+import { site } from "../../site.config";
+import styles from "./support-form.module.css";
+const configured = Boolean(site.web3FormsAccessKey);
+---
+
+<NoteCard title="Send a message">
+  <form
+    method="POST"
+    action={site.web3FormsUrl}
+    data-support-form
+    data-configured={configured}
+    class={styles.form}
+  >
+    <input type="hidden" name="access_key" value={site.web3FormsAccessKey} class={styles.input} />
+    <input type="hidden" name="subject" value="RAMnotes support" class={styles.input} />
+    <input type="hidden" name="from_name" value="RAMnotes website" class={styles.input} />
+    <input
+      type="hidden"
+      name="redirect"
+      value={new URL("/support/thanks", site.url).href}
+      class={styles.input}
+    />
+    <div class={styles.field}>
+      <label for="email" class={styles.label}>
+        Email (required)
+      </label>
+      <input
+        id="email"
+        name="email"
+        type="email"
+        autocomplete="email"
+        required
+        maxlength="254"
+        aria-describedby="email-error"
+        class={styles.input}
+      />
+      <span id="email-error" class:list={[styles.fieldError, styles.hint]}></span>
+    </div>
+    <div class={styles.field}>
+      <label for="name" class={styles.label}>
+        Name (optional)
+      </label>
+      <input id="name" name="name" autocomplete="name" maxlength="200" class={styles.input} />
+    </div>
+    <div class={styles.field}>
+      <label for="topic" class={styles.label}>
+        Topic
+      </label>
+      <select id="topic" name="topic" class={styles.select}>
+        <option>Bug</option>
+        <option>Question</option>
+        <option>Feature idea</option>
+        <option>Other</option>
+      </select>
+    </div>
+    <div class={styles.field}>
+      <label for="versions" class={styles.label}>
+        macOS and RAMnotes versions (optional)
+      </label>
+      <input
+        id="versions"
+        name="versions"
+        placeholder="macOS 27.1, RAMnotes 1.0"
+        maxlength="200"
+        class={styles.input}
+      />
+    </div>
+    <div class={styles.field}>
+      <label for="message" class={styles.label}>
+        Message (required)
+      </label>
+      <textarea
+        id="message"
+        name="message"
+        rows="7"
+        required
+        maxlength="10000"
+        aria-describedby="message-hint message-error"
+        class={styles.textarea}
+      ></textarea>
+      <span id="message-hint" class={styles.hint}>
+        Include steps to reproduce a bug. Please leave out private note contents.
+      </span>
+      <span id="message-error" class:list={[styles.fieldError, styles.hint]}></span>
+    </div>
+    <div aria-hidden="true" class={styles.honeypot}>
+      <label for="botcheck" class={styles.label}>
+        Leave this field empty
+      </label>
+      <input
+        id="botcheck"
+        type="checkbox"
+        name="botcheck"
+        tabindex="-1"
+        autocomplete="off"
+        class={styles.input}
+      />
+    </div>
+    <p class={styles.privacy}>
+      Your message goes through Web3Forms.{" "}
+      <a href="/privacy#support-form">How support data is handled</a>.
+    </p>
+    {!configured && (
+      <p>
+        The form is not available yet. Email{" "}
+        <a href={`mailto:${site.contactEmail}`}>{site.contactEmail}</a>.
+      </p>
+    )}
+    <button type="submit" disabled={!configured} class={styles.button}>
+      Send message
+    </button>
+    <p
+      role="status"
+      aria-live="polite"
+      aria-atomic="true"
+      data-form-result
+      class={styles.result}
+    ></p>
+  </form>
+</NoteCard>
+<script>
+  const form = document.querySelector<HTMLFormElement>("[data-support-form]");
+  if (form) {
+    const result = form.querySelector<HTMLElement>("[data-form-result]")!;
+    const button = form.querySelector<HTMLButtonElement>("button[type=submit]")!;
+    const topic = form.elements.namedItem("topic") as HTMLSelectElement;
+    const subject = form.elements.namedItem("subject") as HTMLInputElement;
+    const updateSubject = () => {
+      subject.value = `RAMnotes support: ${topic.value}`;
+    };
+    topic.addEventListener("change", updateSubject);
+    updateSubject();
+    for (const field of form.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>(
+      "[required]",
+    )) {
+      const error = document.getElementById(`${field.id}-error`)!;
+      field.addEventListener("invalid", () => {
+        field.setAttribute("aria-invalid", "true");
+        error.textContent = field.validationMessage;
+      });
+      field.addEventListener("input", () => {
+        field.removeAttribute("aria-invalid");
+        error.textContent = "";
+      });
+    }
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      if (form.dataset.configured !== "true") {
+        result.textContent = "The form is not available yet. Please use the email address above.";
+        return;
+      }
+      if ((form.elements.namedItem("botcheck") as HTMLInputElement).checked) {
+        result.textContent = "Your message could not be sent. Please try again.";
+        return;
+      }
+      button.disabled = true;
+      button.textContent = "Sending…";
+      result.textContent = "Sending your message…";
+      try {
+        const data = new FormData(form);
+        data.delete("redirect");
+        const response = await fetch(form.action, {
+          method: "POST",
+          body: data,
+          headers: { Accept: "application/json" },
+          signal: AbortSignal.timeout(20000),
+        });
+        const payload = await response.json();
+        if (response.ok && payload.success === true) {
+          result.textContent =
+            "Message sent. Thank you! We’ll reply by email. Your message is still here for your records.";
+        } else {
+          result.textContent =
+            "Your message could not be sent. Your text is still here. Please try again or use the email address above.";
+        }
+      } catch {
+        result.textContent =
+          "We couldn’t confirm delivery. Check your connection before trying again, or use email. Your message is still here.";
+      } finally {
+        button.disabled = false;
+        button.textContent = "Send message";
+      }
+    });
+  }
+</script>

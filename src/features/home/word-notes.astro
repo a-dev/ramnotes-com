@@ -1,0 +1,44 @@
+---
+import Icon from "../../shared/ui/icon.astro";
+import NoteCapsule from "../../shared/ui/note-capsule.astro";
+import NoteWindow from "../../shared/ui/note-window.astro";
+import { LINES } from "./word-notes-motion";
+import styles from "./word-notes.module.css";
+const notes = [
+  { title: "First note", tone: "yellow" },
+  { title: "Second note", tone: "purple" },
+] as const;
+---
+
+<div aria-hidden="true" data-word-notes class={styles.column} style={{ "--_lines": LINES }}>
+  {notes.map((note) => (
+    <NoteWindow title={note.title} style={{ "--_note-fill": `var(--color-note-${note.tone})` }}>
+      <Fragment slot="tools">
+        <NoteCapsule>
+          <Icon name="tint" />
+        </NoteCapsule>
+        <NoteCapsule wide>
+          <span class={styles.letters}>
+            <span class={styles.smaller}>A</span>
+            <span>A</span>
+          </span>
+        </NoteCapsule>
+        <NoteCapsule>
+          <Icon name="list" />
+        </NoteCapsule>
+        <NoteCapsule>
+          <Icon name="new" />
+        </NoteCapsule>
+        <NoteCapsule>
+          <Icon name="trash" />
+        </NoteCapsule>
+      </Fragment>
+      <div data-note-text class={styles.text}></div>
+    </NoteWindow>
+  ))}
+</div>
+
+<script>
+  import { startWordNotes } from "./word-notes-motion";
+  startWordNotes();
+</script>

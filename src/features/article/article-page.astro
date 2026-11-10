@@ -1,0 +1,114 @@
+---
+import type { MarkdownHeading } from "astro";
+import BaseLayout from "../../layouts/base-layout.astro";
+import styles from "./article-page.module.css";
+interface Props {
+  title: string;
+  description: string;
+  updated: Date;
+  draft?: boolean;
+  headings: MarkdownHeading[];
+}
+const { title, description, updated, draft, headings } = Astro.props;
+---
+
+<BaseLayout title={title} description={description} noindex={draft}>
+  <div class={styles.layout}>
+    <nav aria-labelledby="article-index-title" class={styles.index} data-article-index>
+      <p id="article-index-title" class={styles.indexTitle}>
+        Contents
+      </p>
+      <ol class={styles.indexList}>
+        {headings.map((heading) => (
+          <li>
+            <a href={`#${heading.slug}`} class={styles.indexLink}>
+              {heading.text}
+            </a>
+          </li>
+        ))}
+      </ol>
+    </nav>
+    <article class={styles.article}>
+      <header class={styles.header}>
+        <h1 class={styles.title}>{title}</h1>
+        <p class={styles.meta}>
+          <time datetime={updated.toISOString().slice(0, 10)}>
+            {updated.toLocaleDateString("en-US", {
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+              timeZone: "UTC",
+            })}
+          </time>
+        </p>
+        {draft && <p class={styles.notice}>Draft. This article may still change.</p>}
+      </header>
+      <div class={styles.prose}>
+        <slot />
+      </div>
+    </article>
+  </div>
+</BaseLayout>
+
+<script>
+  const index = document.querySelector<HTMLElement>("[data-article-index]");
+  if (index) {
+    const links = [...index.querySelectorAll("a")];
+    const setCurrent = (current: Element | null | undefined) => {
+      for (const link of links) link.setAttribute("aria-current", String(link === current));
+    };
+    if (CSS.supports("scroll-target-group: auto")) {
+      const sync = () =>
+        requestAnimationFrame(() =>
+          setTimeout(() => setCurrent(index.querySelector("a:target-current"))),
+        );
+      addEventListener("load", sync);
+
+      document.addEventListener("scroll", sync, { once: true, passive: true });
+      document.addEventListener("scrollend", sync);
+    } else {
+      const targets = links.map((link) => document.getElementById(link.hash.slice(1)));
+      const observer = new IntersectionObserver(
+        () => {
+          const passed = targets.findLastIndex(
+            (target) => target && target.getBoundingClientRect().top < innerHeight / 2,
+          );
+          setCurrent(links[passed]);
+        },
+        { rootMargin: "-50% 0px -50% 0px" },
+      );
+      for (const target of targets) if (target) observer.observe(target);
+    }
+  }
+
+  const canHover = matchMedia("(hover: hover) and (pointer: fine) and (width > 520px)");
+  for (const trigger of document.querySelectorAll<HTMLButtonElement>("[data-footnote-ref]")) {
+    const popover = trigger.popoverTargetElement;
+    if (!(popover instanceof HTMLElement)) continue;
+    let pinned = false;
+    let timer: ReturnType<typeof setTimeout> | undefined;
+    const isOpen = () => popover.matches(":popover-open");
+    const later = (action: () => void, delay: number) => {
+      clearTimeout(timer);
+      timer = setTimeout(action, delay);
+    };
+    for (const target of [trigger, popover]) {
+      target.addEventListener("pointerenter", (event) => {
+        if (event.pointerType !== "mouse" || !canHover.matches) return;
+        later(() => isOpen() || popover.showPopover(), 120);
+      });
+      target.addEventListener("pointerleave", (event) => {
+        if (event.pointerType !== "mouse" || !canHover.matches) return;
+        later(() => pinned || popover.hidePopover(), 250);
+      });
+    }
+    trigger.addEventListener("click", (event) => {
+      clearTimeout(timer);
+      if (isOpen() && !pinned) event.preventDefault();
+      pinned = !isOpen() || !pinned;
+    });
+    popover.addEventListener("toggle", (event) => {
+      if ((event as ToggleEvent).newState === "closed") pinned = false;
+    });
+  }
+</script>

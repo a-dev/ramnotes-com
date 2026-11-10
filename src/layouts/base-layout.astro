@@ -1,0 +1,74 @@
+---
+import "#styles/index.css";
+import Header from "../shared/ui/header.astro";
+import Footer from "../shared/ui/footer.astro";
+import { site } from "../site.config";
+import { isProductionBuild } from "../lib/env";
+import styles from "./base-layout.module.css";
+interface Props {
+  title?: string;
+  description?: string;
+  noindex?: boolean;
+}
+const { title, description = site.tagline, noindex = false } = Astro.props;
+const fullTitle = title ? `${title} · ${site.name}` : site.name;
+
+const pathname = Astro.url.pathname.replace(/(?:\/index)?\.html$/, "") || "/";
+const canonical = new URL(pathname, site.url);
+const isHome = pathname === "/";
+const websiteData = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: site.name,
+  url: new URL("/", site.url).href,
+};
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="text-scale" content="scale" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={new URL("/og.png", site.url)} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={new URL("/twitter.png", site.url)} />
+    <link rel="icon" href="/favicon.ico" sizes="48x48" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png" />
+    <meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#141416" media="(prefers-color-scheme: dark)" />
+    {isHome && (
+      <script is:inline type="application/ld+json" set:html={JSON.stringify(websiteData)} />
+    )}
+    {(!isProductionBuild || noindex) && <meta name="robots" content="noindex" />}
+    {isProductionBuild && site.analyticsToken && (
+      <script
+        is:inline
+        defer
+        src={site.analyticsScriptUrl}
+        data-cf-beacon={JSON.stringify({ token: site.analyticsToken })}
+      ></script>
+    )}
+  </head>
+  <body>
+    <a href="#main" class={styles.skip}>
+      Skip to content
+    </a>
+    <Header />
+    <main id="main" tabindex="-1">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>

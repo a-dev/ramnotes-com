@@ -1,0 +1,11 @@
+---
+import logo from "../../assets/logo.svg?raw";
+import styles from "./logo.module.css";
+
+interface Props {
+  class?: string;
+}
+const { class: className } = Astro.props;
+---
+
+<span role="img" aria-label="RAMnotes" set:html={logo} class:list={[styles.logo, className]} />

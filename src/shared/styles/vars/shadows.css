@@ -1,0 +1,6 @@
+:root {
+  --color-shadow: color-mix(in srgb, var(--color-black) 20%, transparent);
+  --color-shadow-light: color-mix(in srgb, var(--color-black) 16%, transparent);
+  --shadow-popup: 0 8px 32px var(--color-shadow-light);
+  --shadow-sheet: 0 -8px 32px var(--color-shadow);
+}

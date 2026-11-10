@@ -1,0 +1,351 @@
+@layer ui {
+  .article {
+    max-width: 72ch;
+    margin: auto;
+  }
+  .index {
+    display: none;
+  }
+
+  .index-title {
+    margin-bottom: var(--space-s);
+    font-size: var(--fs-s);
+    font-weight: 600;
+    color: var(--color-text-secondary);
+  }
+
+  .index-list {
+    margin: 0;
+    padding: 0;
+
+    font-size: var(--fs-s);
+    line-height: 1.4;
+    list-style: none;
+
+    scroll-target-group: auto;
+  }
+
+  .index-link {
+    display: block;
+
+    padding: var(--space-xxs) var(--space-s);
+    border-inline-start: 2px solid var(--color-border-subtle);
+
+    color: var(--color-text-secondary);
+    text-decoration: none;
+  }
+  .index-link:hover {
+    color: var(--color-text-primary);
+  }
+  .index-link:is(:target-current, [aria-current="true"]) {
+    border-inline-start-color: var(--color-action);
+    font-weight: 600;
+    color: var(--color-text-primary);
+  }
+  .header {
+    margin-bottom: var(--space-xxl);
+  }
+  .title {
+    margin-bottom: var(--space-m);
+    text-wrap: balance;
+  }
+  .meta {
+    margin-bottom: 0;
+    font-size: var(--fs-s);
+    color: var(--color-text-secondary);
+  }
+  .notice {
+    margin: var(--space-l) 0 0;
+    padding: var(--space-m) var(--space-l);
+    border-radius: var(--rounded-m);
+    background: var(--color-note-yellow);
+  }
+  .prose {
+    font-family: var(--font-reading);
+    font-size: 1.35rem;
+    line-height: 1.65;
+    overflow-wrap: break-word;
+    hanging-punctuation: first allow-end;
+  }
+  .prose :global(p) {
+    margin-bottom: 1.25em;
+    text-wrap: pretty;
+  }
+  .prose :global(h2) {
+    scroll-margin-top: var(--space-xl);
+    margin: var(--space-xxxl) 0 var(--space-m);
+    font-family: var(--font-ui);
+    text-wrap: balance;
+  }
+  .prose :global(h3) {
+    scroll-margin-top: var(--space-xl);
+
+    margin: var(--space-xl) 0 var(--space-s);
+
+    font-family: var(--font-ui);
+    font-size: var(--fs-l);
+    text-wrap: balance;
+  }
+  .prose :global(:is(ul, ol)) {
+    margin: 0 0 1.25em;
+    padding-inline-start: 1.25em;
+  }
+  .prose :global(li) {
+    text-wrap: pretty;
+  }
+  .prose :global(li + li) {
+    margin-top: var(--space-xs);
+  }
+  .prose :global(li::marker) {
+    color: var(--color-text-secondary);
+  }
+  .prose :global(table) {
+    overflow-x: auto;
+    display: block;
+    border-collapse: collapse;
+
+    margin-bottom: 1.25em;
+
+    font: var(--fs-m) / 1.5 var(--font-ui);
+  }
+  .prose :global(th),
+  .prose :global(td) {
+    padding: var(--space-xs) var(--space-s);
+    border-bottom: 1px solid var(--color-border-subtle);
+    text-align: left;
+    vertical-align: top;
+  }
+  .prose :global(th) {
+    font-weight: 600;
+    color: var(--color-text-secondary);
+  }
+  .prose :global(th:first-child),
+  .prose :global(td:first-child) {
+    padding-inline-start: 0;
+  }
+  .prose :global(kbd) {
+    padding: 0 0.35em;
+    border: 1px solid var(--color-border-subtle);
+    border-bottom-width: 2px;
+    border-radius: 0.35em;
+
+    font-family: var(--font-ui);
+    font-size: 0.8em;
+    white-space: nowrap;
+  }
+  .prose :global([data-footnote]) {
+    white-space: nowrap;
+  }
+  .prose :global(sup) {
+    line-height: 0;
+  }
+  .prose :global([data-footnote-ref]) {
+    anchor-name: var(--_anchor);
+
+    margin-inline: 0.1em;
+    padding: 0.2em 0.4em;
+    border: 0;
+    border-radius: 1em;
+
+    font: 600 0.75em/1 var(--font-ui);
+    font-variant-numeric: tabular-nums;
+    color: var(--color-action-text);
+
+    background: color-mix(in srgb, var(--color-action) 12%, transparent);
+  }
+  .prose :global([data-footnote-ref]:hover),
+  .prose :global([data-footnote]:has(:popover-open) [data-footnote-ref]) {
+    background: color-mix(in srgb, var(--color-action) 22%, transparent);
+  }
+  .prose :global([data-footnote-popover]) {
+    position: fixed;
+    inset: auto 0 0;
+    translate: 0 100%;
+
+    overflow-y: auto;
+    overscroll-behavior: contain;
+
+    width: auto;
+    max-width: none;
+    max-height: 70dvh;
+    margin: 0;
+    padding: var(--space-m) var(--space-l) var(--space-xl);
+    border: 0;
+    border-radius: var(--rounded-m) var(--rounded-m) 0 0;
+
+    font: var(--fs-m) / 1.6 var(--font-ui);
+    color: var(--color-text-primary);
+    white-space: normal;
+
+    background: var(--color-panel-bg);
+    box-shadow: var(--shadow-sheet);
+
+    transition:
+      translate 0.35s cubic-bezier(0.32, 0.72, 0, 1),
+      display 0.35s allow-discrete,
+      overlay 0.35s allow-discrete;
+  }
+  .prose :global([data-footnote-popover]::before) {
+    content: "";
+
+    display: block;
+
+    width: var(--space-xl);
+    height: var(--space-xxs);
+    margin: 0 auto var(--space-s);
+    border-radius: var(--space-xxs);
+
+    background: var(--color-border-subtle);
+  }
+  .prose :global([data-footnote-popover]:popover-open) {
+    translate: 0 0;
+  }
+  .prose :global([data-footnote-popover]::backdrop) {
+    background: rgb(0 0 0 / 0%);
+    transition:
+      background 0.35s,
+      display 0.35s allow-discrete,
+      overlay 0.35s allow-discrete;
+  }
+  .prose :global([data-footnote-popover]:popover-open::backdrop) {
+    background: rgb(0 0 0 / 35%);
+  }
+  .prose :global([data-footnote-head]) {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: var(--space-xs);
+
+    font: 600 var(--fs-s) / 1.4 var(--font-ui);
+    color: var(--color-text-secondary);
+  }
+  .prose :global([data-footnote-head] button) {
+    width: var(--space-xl);
+    height: var(--space-xl);
+    margin-inline-end: calc(-1 * var(--space-xs));
+    padding: 0;
+    border: 0;
+    border-radius: var(--rounded-pill);
+
+    font: 400 var(--fs-l) / 1 var(--font-ui);
+    color: inherit;
+
+    background: transparent;
+  }
+  .prose :global([data-footnote-head] button:hover) {
+    background: var(--color-border-subtle);
+  }
+  .prose :global([data-footnote-body]),
+  .prose :global([data-footnote-paragraph]) {
+    display: block;
+  }
+  .prose :global([data-footnote-paragraph] + [data-footnote-paragraph]) {
+    margin-top: var(--space-xs);
+  }
+  .prose :global([data-footnotes]) {
+    margin-top: var(--space-xxxl);
+    padding-top: var(--space-l);
+    border-top: 1px solid var(--color-border-subtle);
+
+    font: var(--fs-m) / 1.6 var(--font-ui);
+    color: var(--color-text-secondary);
+  }
+  .prose :global([data-footnotes] h2) {
+    margin-top: 0;
+    font-size: var(--fs-l);
+  }
+  .prose :global([data-footnotes] li) {
+    scroll-margin-top: var(--space-xl);
+    margin-bottom: var(--space-xs);
+  }
+  .prose :global([data-footnotes] li:target) {
+    color: var(--color-text-primary);
+  }
+  .prose :global([data-footnotes] p) {
+    margin-bottom: 0;
+  }
+  .prose :global([data-footnote-backref]) {
+    font-family: var(--font-ui);
+  }
+
+  @media (width > 1100px) {
+    .layout {
+      display: grid;
+      grid-template-columns: 2fr minmax(0, 68ch) 1fr;
+      column-gap: var(--space-xxl);
+      align-items: start;
+    }
+
+    .index {
+      position: sticky;
+      top: var(--space-xl);
+
+      overflow-y: auto;
+      display: block;
+
+      max-height: calc(100dvh - 2 * var(--space-xl));
+    }
+    .article {
+      grid-column: 2;
+      grid-row: 1;
+    }
+  }
+
+  @media (width <= 520px) {
+    .prose {
+      font-size: var(--fs-m);
+    }
+  }
+
+  @starting-style {
+    .prose :global([data-footnote-popover]:popover-open) {
+      translate: 0 100%;
+    }
+    .prose :global([data-footnote-popover]:popover-open::backdrop) {
+      background: rgb(0 0 0 / 0%);
+    }
+  }
+  @supports (anchor-name: --footnote) {
+    @media (width > 520px) {
+      .prose :global([data-footnote-popover]) {
+        inset: auto;
+        translate: none;
+        position-anchor: var(--_anchor);
+        position-area: top;
+        position-try-fallbacks: flip-block;
+
+        width: max-content;
+        max-width: 40ch;
+        max-height: none;
+        margin: var(--space-xs) var(--space-m);
+        padding: var(--space-m) var(--space-l);
+        border: 1px solid var(--color-border-subtle);
+        border-radius: var(--rounded-m);
+
+        opacity: 0;
+        box-shadow: var(--shadow-popup);
+
+        transition:
+          opacity 0.15s,
+          display 0.15s allow-discrete,
+          overlay 0.15s allow-discrete;
+      }
+      .prose :global([data-footnote-popover]:popover-open) {
+        opacity: 1;
+      }
+      .prose :global([data-footnote-popover]::before),
+      .prose :global([data-footnote-head]),
+      .prose :global([data-footnote-popover]::backdrop),
+      .prose :global([data-footnote-popover]:popover-open::backdrop) {
+        display: none;
+      }
+
+      @starting-style {
+        .prose :global([data-footnote-popover]:popover-open) {
+          opacity: 0;
+        }
+      }
+    }
+  }
+}

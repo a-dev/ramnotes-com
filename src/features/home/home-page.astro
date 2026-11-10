@@ -1,0 +1,113 @@
+---
+import BaseLayout from "../../layouts/base-layout.astro";
+import DownloadButtons from "../../shared/ui/download-buttons.astro";
+import WordNotes from "./word-notes.astro";
+import NoteTour from "./note-tour.astro";
+import NoteList from "./note-list.astro";
+import Faq from "./faq.astro";
+import { site } from "../../site.config";
+import styles from "./home-page.module.css";
+
+const languages = [
+  { name: "English", lang: "en" },
+  { name: "Español", lang: "es" },
+  { name: "العربية", lang: "ar", dir: "rtl" },
+  { name: "Português", lang: "pt" },
+  { name: "日本語", lang: "ja" },
+  { name: "Deutsch", lang: "de" },
+  { name: "简体中文", lang: "zh-Hans" },
+  { name: "Français", lang: "fr" },
+];
+---
+
+<BaseLayout
+  title="Quick notes for Mac, one shortcut away"
+  description="Quick notes for Mac. Open them with one shortcut, tint each note to find it at a glance, and keep plain .txt files in any folder, even your AI projects."
+>
+  <div class:list={[styles.split, styles.section]}>
+    <div>
+      <section class:list={[styles.hero, styles.section]}>
+        <div class={styles.intro}>
+          <p class={styles.eyebrow}>RAM for your brain</p>
+          <h1 class={styles.headline}>A tiny macOS app for short-term notes.</h1>
+          <p class={styles.lead}>
+            One shortcut to write, color tints to find notes at a glance, and plain .txt files you
+            can keep in any folder.
+          </p>
+          <DownloadButtons />
+          <p class={styles.requirements}>
+            {site.architecture} · {site.minimumMacOS}+
+          </p>
+          <div class={styles.languages}>
+            <p class={styles.eyebrow} id="languages-label">
+              RAMnotes speaks
+            </p>
+            <ul class={styles.languageList} aria-labelledby="languages-label">
+              {languages.map(({ name, lang, dir }) => (
+                <li class={styles.language} lang={lang}>
+                  <bdi dir={dir}>{name}</bdi>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <a href="/articles/ram-and-notes" class={styles.article}>
+            <span class={styles.articleBody}>
+              <span class={styles.articleEyebrow}>Read the article</span>
+              <span class={styles.articleTitle}>RAM and notes</span>
+              <span class={styles.articleText}>Why this app exists and how you can use it.</span>
+            </span>
+            <span class={styles.articleArrow} aria-hidden="true">
+              →
+            </span>
+          </a>
+        </div>
+      </section>
+    </div>
+    <div class={styles.notes}>
+      <WordNotes />
+    </div>
+  </div>
+
+  <section aria-labelledby="tour" class={styles.section}>
+    <hr class={styles.rule} />
+    <h2 id="tour" class={styles.subheader}>
+      Meet the note
+    </h2>
+    <NoteTour />
+    <hr class={styles.rule} />
+  </section>
+  <section aria-labelledby="list" class={styles.section}>
+    <h2 id="list" class={styles.subheader}>
+      Meet the list
+    </h2>
+    <NoteList />
+    <hr class={styles.rule} />
+  </section>
+  <div class:list={[styles.pair, styles.section]}>
+    <section class={styles.privacy}>
+      <p class={styles.eyebrow}>YOURS TO KEEP</p>
+      <h2>Plain files. Your folder.</h2>
+      <p>
+        RAMnotes has no account and no network access. Each note is a file in a folder on your Mac.
+        To sync between devices, put the folder in iCloud Drive or another sync service. If a file
+        changes on disk, the note shows the change at once.
+      </p>
+    </section>
+    <section class={styles.privacy}>
+      <p class={styles.eyebrow}>WORKS WITH AI</p>
+      <h2>Let AI read your notes</h2>
+      <p>
+        You can save a note inside a project folder. The note is a plain .txt file, so Claude,
+        ChatGPT, and other AI tools can read it and write to it. Each project can have its own note
+        at its own path.
+      </p>
+    </section>
+  </div>
+  <section id="faq" aria-labelledby="faq-title" class={styles.section}>
+    <hr class={styles.rule} />
+    <h2 id="faq-title" class={styles.subheader}>
+      FAQ
+    </h2>
+    <Faq />
+  </section>
+</BaseLayout>

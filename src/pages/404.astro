@@ -1,0 +1,13 @@
+---
+import BaseLayout from "../layouts/base-layout.astro";
+import NoteCard from "../shared/ui/note-card.astro";
+---
+
+<BaseLayout title="Note not found" noindex>
+  <NoteCard tone="yellow" title="This note doesn't exist">
+    <p>That page may have moved, or the address may have a typo.</p>
+    <p>
+      <a href="/">Home</a> · <a href="/help">Help</a> · <a href="/support">Support</a>
+    </p>
+  </NoteCard>
+</BaseLayout>

@@ -1,0 +1,58 @@
+---
+import { site } from "../../site.config";
+import styles from "./faq.module.css";
+
+const faqs = [
+  {
+    question: "How much does RAMnotes cost?",
+    answer: `RAMnotes is <a href="${site.githubUrl}">open source</a>, and you can install it for free from <a href="${site.releasesUrl}">GitHub Releases</a>. If you want to support development, or you prefer the App Store, you can buy it there for $9.90. It's a nice way to say thanks.`,
+  },
+  {
+    question: "Why do I need to choose my folder on a new Mac?",
+    answer:
+      "Folder access permission is local to each Mac. Choose your existing notes folder again in Settings. If you use iCloud Drive, wait for the files to download first.",
+  },
+  {
+    question: "Where are my notes stored?",
+    answer:
+      "As .txt files in the folder you chose. RAMnotes does not upload them to a server. You can change the folder in Settings.",
+  },
+  {
+    question: "The app is running, but I can’t see my notes",
+    answer: `<p>RAMnotes has no Dock icon and no menu bar icon. You show your notes with a keyboard shortcut instead. Press <kbd>⌃\\</kbd> (Control and Backslash) to show your notes, and press it again to hide them. To see your notes together with the note list, press <kbd>⌃⌘\\</kbd>.</p>
+<p>You can also show your notes by scrolling over the menu bar, the thin strip at the top of your screen. Turn this on in Settings → Keyboard → Menu Bar Scroll Gesture. Then scroll up or down over the menu bar to show your notes, or left or right to show your notes and the note list. The gesture is off by default and works with a trackpad or a mouse with smooth scrolling.</p>
+<p>If you changed a shortcut, open any RAMnotes window, press <kbd>⌘,</kbd> and look in Settings → Keyboard.</p>`,
+  },
+  {
+    question: "How do I report a bug?",
+    answer:
+      'Use the form on the <a href="/support">support page</a>. Tell us what you expected, what happened, and the steps to reproduce it. Include your macOS and RAMnotes versions. Please leave private note contents out of your report.',
+  },
+];
+
+const faqData = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqs.map(({ question, answer }) => ({
+    "@type": "Question",
+    name: question,
+
+    acceptedAnswer: { "@type": "Answer", text: answer.replaceAll(/<\/?kbd>/g, "") },
+  })),
+};
+
+const faqJson = JSON.stringify(faqData).replaceAll("<", "\\u003c");
+---
+
+<div class={styles.list}>
+  {faqs.map(({ question, answer }) => (
+    <details class={styles.item}>
+      <summary class={styles.question}>{question}</summary>
+      <div class={styles.answer} set:html={answer} />
+    </details>
+  ))}
+</div>
+<p class={styles.more}>
+  Still stuck? <a href="/help">Read the full manual</a> or <a href="/support">get in touch</a>.
+</p>
+<script is:inline type="application/ld+json" set:html={faqJson} />

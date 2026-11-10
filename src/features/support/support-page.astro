@@ -1,0 +1,17 @@
+---
+import BaseLayout from "../../layouts/base-layout.astro";
+import SupportForm from "./support-form.astro";
+import styles from "./support-page.module.css";
+---
+
+<BaseLayout title="Support" description="Get in touch with RAMnotes support.">
+  <div class={styles.support}>
+    <h1>Get in touch</h1>
+    <p>
+      Check the <a href="/#faq">FAQ</a> or <a href="/help">read the full manual</a> first.
+    </p>
+    <section id="contact" class={styles.section}>
+      <SupportForm />
+    </section>
+  </div>
+</BaseLayout>

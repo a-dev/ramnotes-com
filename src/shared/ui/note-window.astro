@@ -1,0 +1,25 @@
+---
+import type { HTMLAttributes } from "astro/types";
+import TrafficLights from "./traffic-lights.astro";
+import styles from "./note-window.module.css";
+
+interface Props extends HTMLAttributes<"div"> {
+  title: string;
+  titleClass?: string;
+  bodyClass?: string;
+}
+const { title, titleClass, bodyClass, class: className, ...rest } = Astro.props;
+---
+
+<div {...rest} class:list={[styles.window, className]}>
+  <div class={styles.titlebar}>
+    <TrafficLights />
+    <span class:list={[styles.title, titleClass]}>{title}</span>
+    <span class={styles.tools}>
+      <slot name="tools" />
+    </span>
+  </div>
+  <div class:list={[styles.body, bodyClass]}>
+    <slot />
+  </div>
+</div>

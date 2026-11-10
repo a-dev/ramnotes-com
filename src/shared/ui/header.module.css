@@ -1,0 +1,61 @@
+@layer ui {
+  .root {
+    display: flex;
+    align-items: center;
+
+    max-width: var(--max-content-width);
+    margin: auto;
+    padding: var(--space-l);
+  }
+  .link {
+    display: block;
+    line-height: 0;
+  }
+  @media (width > 800px) {
+    .container[data-home] {
+      pointer-events: none;
+      height: calc(27rem * 121 / 230 + var(--space-l) * 2 + 200px);
+      margin-bottom: -200px;
+    }
+    .root[data-home] {
+      position: sticky;
+      z-index: 5;
+      top: 0;
+    }
+    .root[data-home] .link {
+      pointer-events: auto;
+    }
+
+    .root[data-home] .logo {
+      transform-origin: top left;
+      transform: scale(var(--_logo-scale, 1));
+      width: 27rem;
+    }
+    @supports ((animation-timeline: scroll()) and (animation-range: 0% 100%)) {
+      .root[data-home] .logo {
+        animation-name: shrink;
+        animation-duration: auto;
+        animation-timing-function: linear;
+        animation-fill-mode: both;
+        animation-timeline: scroll(block root);
+        animation-range: 0 200px;
+      }
+    }
+  }
+  @keyframes shrink {
+    to {
+      transform: scale(calc(100 / 432));
+    }
+  }
+  @media (prefers-reduced-motion: reduce) and (width > 800px) {
+    .container[data-home] {
+      height: auto;
+      margin-bottom: 0;
+    }
+    .root[data-home] .logo {
+      transform: none;
+      width: 100px;
+      animation: none;
+    }
+  }
+}

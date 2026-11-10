@@ -1,0 +1,15 @@
+---
+import type { HTMLAttributes } from "astro/types";
+import styles from "./note-capsule.module.css";
+
+interface Props extends HTMLAttributes<"button"> {
+  as?: "span" | "button";
+
+  wide?: boolean;
+}
+const { as: Tag = "span", wide = false, class: className, ...rest } = Astro.props;
+---
+
+<Tag {...rest} class:list={[styles.capsule, wide && styles.wide, className]}>
+  <slot />
+</Tag>

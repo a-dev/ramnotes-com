@@ -1,0 +1,55 @@
+@import "./palette.css";
+
+:root {
+  --color-main-bg: light-dark(var(--color-white), var(--color-gray-900));
+  --color-panel-bg: light-dark(var(--color-white), var(--color-gray-850));
+  --color-text-primary: light-dark(var(--color-gray-800), var(--color-gray-50));
+  --color-text-secondary: light-dark(var(--color-gray-700), var(--color-gray-100));
+  --color-border-subtle: light-dark(
+    color-mix(in srgb, var(--color-gray-800) 15%, transparent),
+    color-mix(in srgb, var(--color-gray-50) 19%, transparent)
+  );
+  --color-action: light-dark(var(--color-blue-light), var(--color-blue-dark));
+  --color-action-text: light-dark(var(--color-blue-700), var(--color-blue-300));
+  --color-focus-ring: var(--color-action);
+  --color-menu-selection: var(--color-blue-menu);
+  --color-menu-bg: light-dark(
+    color-mix(in srgb, var(--color-white) 80%, transparent),
+    color-mix(in srgb, var(--color-gray-700) 80%, transparent)
+  );
+  --color-menu-border: light-dark(
+    color-mix(in srgb, var(--color-black) 15%, transparent),
+    color-mix(in srgb, var(--color-white) 20%, transparent)
+  );
+  --color-tone-gray: light-dark(var(--color-gray-light), var(--color-gray-dark));
+  --color-tone-blue: light-dark(var(--color-blue-light), var(--color-blue-dark));
+  --color-tone-green: light-dark(var(--color-green-light), var(--color-green-dark));
+  --color-tone-yellow: light-dark(var(--color-yellow-light), var(--color-yellow-dark));
+  --color-tone-red: var(--color-red);
+  --color-tone-purple: light-dark(var(--color-purple-light), var(--color-purple-dark));
+  --color-note-gray: light-dark(
+    color-mix(in srgb, var(--color-gray-light) 18%, var(--color-white)),
+    color-mix(in srgb, var(--color-gray-dark) 30%, var(--color-gray-900))
+  );
+  --color-note-blue: light-dark(
+    color-mix(in srgb, var(--color-blue-light) 6%, var(--color-white)),
+    color-mix(in srgb, var(--color-blue-dark) 12%, var(--color-gray-900))
+  );
+  --color-note-green: light-dark(
+    color-mix(in srgb, var(--color-green-light) 6%, var(--color-white)),
+    color-mix(in srgb, var(--color-green-dark) 12%, var(--color-gray-900))
+  );
+  --color-note-yellow: light-dark(
+    color-mix(in srgb, var(--color-yellow-light) 10%, var(--color-white)),
+    color-mix(in srgb, var(--color-yellow-dark) 26%, var(--color-gray-900))
+  );
+  --color-note-red: light-dark(
+    color-mix(in srgb, var(--color-red) 10%, var(--color-white)),
+    color-mix(in srgb, var(--color-red) 16%, var(--color-gray-900))
+  );
+  --color-note-purple: light-dark(
+    color-mix(in srgb, var(--color-purple-light) 10%, var(--color-white)),
+    color-mix(in srgb, var(--color-purple-dark) 12%, var(--color-gray-900))
+  );
+  --color-note-none: var(--color-panel-bg);
+}

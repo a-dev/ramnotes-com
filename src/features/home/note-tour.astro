@@ -1,0 +1,138 @@
+---
+import ArrowHead from "../../shared/ui/arrow-head.astro";
+import Icon from "../../shared/ui/icon.astro";
+import NoteCapsule from "../../shared/ui/note-capsule.astro";
+import NoteWindow from "../../shared/ui/note-window.astro";
+import styles from "./note-tour.module.css";
+
+import { tones, sizes, START_TONE, callouts } from "./note-tour-data";
+---
+
+<figure data-note-tour data-sizes={sizes.join(" ")} class={styles.tour}>
+  <ul class={styles.labels}>
+    {callouts.map((c) => (
+      <li data-callout={c.anchor} class:list={[styles.label, styles[c.anchor]]}>
+        {c.tryIt && <span class={styles.badge}>Try it</span>}
+        {c.keys.length > 0 && (
+          <span class={styles.keys}>
+            {c.keys.map((k) => (
+              <kbd>{k}</kbd>
+            ))}
+          </span>
+        )}
+        <span>{c.label}</span>
+      </li>
+    ))}
+  </ul>
+  <svg aria-hidden="true" class={styles.arrows}>
+    <defs>
+      <ArrowHead id="note-tour-head" />
+      <ArrowHead id="note-tour-head-hot" class={styles.hot} />
+    </defs>
+  </svg>
+
+  <NoteWindow
+    data-tour-note
+    title="A RAM upgrade for your brain"
+    class={styles.note}
+    titleClass={styles.title}
+    bodyClass={styles.text}
+    style={{ "--_note-fill": `var(--color-note-${START_TONE})`, "--_fs": "var(--fs-m)" }}
+  >
+    <Fragment slot="tools">
+      <NoteCapsule
+        as="button"
+        type="button"
+        data-tint
+        data-anchor="tint"
+        aria-label="Background tint"
+        aria-haspopup="menu"
+        aria-expanded="false"
+        aria-controls="note-tour-menu"
+        class={styles.button}
+      >
+        <Icon name="tint" />
+      </NoteCapsule>
+      <NoteCapsule wide data-anchor="size" class={styles.split}>
+        <button
+          type="button"
+          data-size="-1"
+          aria-label="Decrease font size"
+          class:list={[styles.button, styles.smaller]}
+        >
+          A
+        </button>
+        <button
+          type="button"
+          data-size="1"
+          aria-label="Increase font size"
+          class:list={[styles.button, styles.larger]}
+        >
+          A
+        </button>
+      </NoteCapsule>
+      <NoteCapsule aria-hidden="true" data-anchor="list">
+        <Icon name="list" />
+      </NoteCapsule>
+      <NoteCapsule aria-hidden="true" data-anchor="new">
+        <Icon name="new" />
+      </NoteCapsule>
+      <NoteCapsule aria-hidden="true" data-anchor="trash">
+        <Icon name="trash" />
+      </NoteCapsule>
+    </Fragment>
+    <p>FAST TO WRITE</p>
+    <p>
+      Press ⌃\ or scroll over the menu bar. RAMnotes opens on the note you used last, so you can
+      start typing right away. Press Esc and it's gone.
+    </p>
+    <p>EASY TO FIND</p>
+    <p>
+      Give each note a color tint and its own font size, like sticky notes on your desk. Project A
+      is green, study notes are blue, and the urgent one is big.
+    </p>
+    <p>QUICK TO OPEN</p>
+    <p>
+      Links in a note work like in a code editor. Hold ⌘ and hover a link, such as{" "}
+      <a data-link href="https://www.google.com/" class={styles.link}>
+        https://www.google.com/
+      </a>
+      , then click to open it.
+    </p>
+  </NoteWindow>
+
+  <div id="note-tour-menu" role="menu" aria-label="Background tint" hidden class={styles.menu}>
+    {tones.map((tone) => (
+      <button
+        type="button"
+        role="menuitemradio"
+        aria-checked={tone.id === START_TONE ? "true" : "false"}
+        data-tone={tone.id}
+        class={styles.item}
+      >
+        <span aria-hidden="true" class={styles.check}>
+          ✓
+        </span>
+        {tone.id === "none" ? (
+          <span aria-hidden="true" class:list={[styles.dot, styles.empty]}>
+            <svg viewBox="0 0 12 12" width="12" height="12">
+              <circle cx="6" cy="6" r="4.4" />
+              <path d="M10.5 1.5 1.5 10.5" />
+            </svg>
+          </span>
+        ) : (
+          <span
+            aria-hidden="true"
+            class={styles.dot}
+            style={{ "--_dot": `var(--color-tone-${tone.id})` }}
+          />
+        )}
+        {tone.name}
+      </button>
+    ))}
+  </div>
+</figure>
+
+<script>
+  import "./note-tour-client";
+</script>

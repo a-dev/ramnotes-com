@@ -1,0 +1,18 @@
+@layer ui {
+  .icon {
+    flex: none;
+
+    fill: none;
+    stroke: currentcolor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: var(--_stroke);
+  }
+  .dot {
+    fill: currentcolor;
+  }
+  .solid {
+    fill: currentcolor;
+    stroke: none;
+  }
+}

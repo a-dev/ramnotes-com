@@ -1,0 +1,71 @@
+@layer ui {
+  .downloads {
+    display: inline-grid;
+    place-items: center;
+  }
+  .buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-s);
+    align-items: center;
+  }
+  .unavailable {
+    grid-area: 1 / 1;
+    opacity: 0.35;
+    filter: blur(1px);
+  }
+  .app-store-badge {
+    display: block;
+    inline-size: auto;
+    block-size: var(--space-xxl);
+  }
+  .github {
+    display: inline-flex;
+    gap: var(--space-xs);
+    align-items: center;
+
+    block-size: var(--space-xxl);
+    padding-inline: var(--space-m);
+    border: 1px solid var(--color-border-subtle);
+    border-radius: var(--rounded-m);
+
+    font-size: var(--fs-s);
+    font-weight: 600;
+    color: var(--color-action-text);
+
+    background-color: var(--color-panel-bg);
+  }
+  .github-mark {
+    inline-size: var(--fs-l);
+    block-size: var(--fs-l);
+    fill: currentcolor;
+  }
+  .coming-soon {
+    position: relative;
+    z-index: 1;
+
+    grid-area: 1 / 1;
+
+    padding: var(--space-xxs) var(--space-s);
+    border-radius: var(--rounded-m);
+
+    font-size: var(--fs-s);
+    font-weight: 600;
+    color: var(--color-main-bg);
+
+    background-color: var(--color-action-text);
+  }
+  .sr-only {
+    position: absolute;
+
+    overflow: hidden;
+
+    width: 1px;
+    height: 1px;
+    padding: 0;
+
+    white-space: nowrap;
+
+    clip-path: inset(50%);
+  }
+}

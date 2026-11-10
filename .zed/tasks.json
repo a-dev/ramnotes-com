@@ -1,0 +1,79 @@
+[
+  {
+    "label": "Dev server",
+    "command": "bun",
+    "args": ["run", "dev"],
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "save": "all"
+  },
+  {
+    "label": "Check project",
+    "command": "bun",
+    "args": ["run", "check"],
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "save": "all"
+  },
+  {
+    "label": "Lint scripts and Astro",
+    "command": "bun",
+    "args": ["run", "lint"],
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "save": "all"
+  },
+  {
+    "label": "Lint CSS",
+    "command": "bun",
+    "args": ["run", "lint:css"],
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "save": "all"
+  },
+  {
+    "label": "Check Astro types and content",
+    "command": "bun",
+    "args": ["run", "check:astro"],
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "save": "all"
+  },
+  {
+    "label": "Format project",
+    "command": "bun",
+    "args": ["run", "format"],
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "save": "all"
+  },
+  {
+    "label": "Check formatting",
+    "command": "bun",
+    "args": ["run", "format:check"],
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "save": "all"
+  },
+  {
+    "label": "Build / regenerate CSS Module types",
+    "command": "bun",
+    "args": ["run", "build"],
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "save": "all"
+  },
+  {
+    "label": "Preview with Wrangler",
+    "command": "bun",
+    "args": ["run", "preview"],
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "save": "all"
+  },
+  {
+    "label": "Browser QA (requires preview on port 8787)",
+    "command": "bun",
+    "args": ["run", "test:e2e"],
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "save": "all"
+  },
+  {
+    "label": "Verify build environments",
+    "command": "bun",
+    "args": ["run", "qa:env"],
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "save": "all"
+  }
+]

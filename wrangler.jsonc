@@ -1,0 +1,14 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "ramnotes-com",
+  "compatibility_date": "2026-10-21",
+  "assets": {
+    "directory": "./dist",
+    "html_handling": "drop-trailing-slash",
+    "not_found_handling": "404-page",
+  },
+  "preview_urls": true,
+  "previews": {},
+  "workers_dev": true,
+  "routes": [{ "pattern": "ramnotes.com", "custom_domain": true }],
+}

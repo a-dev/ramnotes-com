@@ -1,0 +1,45 @@
+@layer ui {
+  .column {
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-m);
+
+    width: 392px;
+
+    font-size: var(--fs-xl);
+    line-height: 1.5;
+    color: var(--color-text-primary);
+    white-space: nowrap;
+  }
+  .letters {
+    display: flex;
+    gap: 14px;
+    align-items: baseline;
+    font-size: 14px;
+  }
+  .smaller {
+    font-size: 10px;
+  }
+  .text {
+    position: relative;
+
+    overflow: clip;
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 0.3em;
+    align-content: flex-start;
+
+    height: calc(var(--_lines) * 1lh);
+  }
+  .column > [data-flyer],
+  .text > [data-flyer] {
+    pointer-events: none;
+
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: 0;
+  }
+}

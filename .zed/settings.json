@@ -1,0 +1,178 @@
+{
+  "format_on_save": "on",
+  "languages": {
+    "JavaScript": {
+      "language_servers": [
+        "typescript-ls",
+        "oxlint",
+        "oxfmt",
+        "!vtsls",
+        "!typescript-language-server",
+        "..."
+      ],
+      "formatter": {
+        "language_server": {
+          "name": "oxfmt"
+        }
+      },
+      "code_actions_on_format": {
+        "source.fixAll.oxc": true
+      },
+      "prettier": {
+        "allowed": false
+      }
+    },
+    "TypeScript": {
+      "language_servers": [
+        "typescript-ls",
+        "oxlint",
+        "oxfmt",
+        "!vtsls",
+        "!typescript-language-server",
+        "..."
+      ],
+      "formatter": {
+        "language_server": {
+          "name": "oxfmt"
+        }
+      },
+      "code_actions_on_format": {
+        "source.fixAll.oxc": true
+      },
+      "prettier": {
+        "allowed": false
+      }
+    },
+    "JSON": {
+      "language_servers": ["oxfmt", "..."],
+      "formatter": {
+        "language_server": {
+          "name": "oxfmt"
+        }
+      },
+      "prettier": {
+        "allowed": false
+      }
+    },
+    "JSONC": {
+      "language_servers": ["oxfmt", "..."],
+      "formatter": {
+        "language_server": {
+          "name": "oxfmt"
+        }
+      },
+      "prettier": {
+        "allowed": false
+      }
+    },
+    "Markdown": {
+      "language_servers": ["oxfmt", "..."],
+      "formatter": {
+        "language_server": {
+          "name": "oxfmt"
+        }
+      },
+      "prettier": {
+        "allowed": false
+      }
+    },
+    "YAML": {
+      "language_servers": ["oxfmt", "..."],
+      "formatter": {
+        "language_server": {
+          "name": "oxfmt"
+        }
+      },
+      "prettier": {
+        "allowed": false
+      }
+    },
+    "HTML": {
+      "language_servers": ["oxfmt", "..."],
+      "formatter": {
+        "language_server": {
+          "name": "oxfmt"
+        }
+      },
+      "prettier": {
+        "allowed": false
+      }
+    },
+    "CSS": {
+      "language_servers": [
+        "vscode-css-language-server",
+        "stylelint-lsp",
+        "css-variables",
+        "oxfmt",
+        "..."
+      ],
+      "formatter": {
+        "language_server": {
+          "name": "oxfmt"
+        }
+      },
+      "code_actions_on_format": {
+        "source.fixAll.stylelint": true
+      },
+      "prettier": {
+        "allowed": false
+      }
+    },
+    "Astro": {
+      "format_on_save": "on",
+      "formatter": {
+        "external": {
+          "command": "./node_modules/.bin/oxfmt",
+          "arguments": ["--stdin-filepath", "{buffer_path}"]
+        }
+      },
+      "prettier": {
+        "allowed": false
+      }
+    }
+  },
+  "lsp": {
+    "oxfmt": {
+      "initialization_options": {
+        "settings": {
+          "fmt.configPath": ".oxfmtrc.json",
+          "run": "onSave"
+        }
+      }
+    },
+    "oxlint": {
+      "initialization_options": {
+        "settings": {
+          "run": "onType"
+        }
+      }
+    },
+    "stylelint-lsp": {
+      "settings": {
+        "stylelint": {
+          "validate": ["css"]
+        }
+      }
+    },
+    "css-variables": {
+      "settings": {
+        "cssVariables": {
+          "lookupFiles": ["src/shared/styles/**/*.css"],
+          "blacklistFolders": ["**/dist/**", "**/node_modules/**"],
+          "undefinedVarFallback": "info",
+          "eagerJs": true
+        }
+      }
+    },
+    "vscode-css-language-server": {
+      "settings": {
+        "css": {
+          "lint": {
+            "emptyRules": "ignore",
+            "validProperties": ["composes"]
+          }
+        }
+      }
+    }
+  }
+}

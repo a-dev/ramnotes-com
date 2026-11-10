@@ -1,0 +1,52 @@
+---
+import type { Note } from "./note-list-data";
+import styles from "./note-list.module.css";
+
+interface Props {
+  note: Note;
+
+  open: boolean;
+  selected: boolean;
+}
+const { note, open, selected } = Astro.props;
+---
+
+<li
+  data-row
+  data-updated={note.updated}
+  data-created={note.created}
+  aria-current={open ? "true" : undefined}
+  class={styles.row}
+  style={{ "--_vt": `note-list-${note.id}` }}
+>
+  <button type="button" aria-pressed={selected} class={styles.selectNote}>
+    <span data-text class={styles.text}>
+      {note.text}
+    </span>
+    <span class={styles.footer}>
+      <span class={styles.when}>{note.when}</span>
+      <span
+        data-anchor={note.path ? "custom-folder" : "default-folder"}
+        class:list={[styles.folder, note.path && styles.custom]}
+      >
+        <svg aria-hidden="true" class={styles.icon} viewBox="0 0 16 15" width="16" height="15">
+          <use href="#note-list-folder" />
+        </svg>
+        {note.path ? (
+          <span class={styles.path}>{note.path}</span>
+        ) : (
+          <span class={styles.hidden}>Default folder</span>
+        )}
+      </span>
+      {note.tone && (
+        <span
+          data-anchor="tint"
+          class={styles.dot}
+          style={{ "--_dot": `var(--color-tone-${note.tone})` }}
+        >
+          <span class={styles.hidden}>{note.tone} tint</span>
+        </span>
+      )}
+    </span>
+  </button>
+</li>

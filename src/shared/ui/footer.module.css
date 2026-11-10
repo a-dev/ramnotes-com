@@ -1,0 +1,21 @@
+@layer ui {
+  .root {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-l);
+    justify-content: space-between;
+
+    max-width: var(--max-content-width);
+    margin: auto;
+    padding: var(--space-xl) var(--space-l);
+    border-top: 1px solid var(--color-border-subtle);
+
+    font-size: var(--fs-s);
+    color: var(--color-text-secondary);
+  }
+  .nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-l);
+  }
+}

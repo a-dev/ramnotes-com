@@ -1,0 +1,92 @@
+@layer reset {
+  * {
+    box-sizing: border-box;
+  }
+}
+@layer base {
+  html {
+    scroll-behavior: smooth;
+
+    font-family: var(--font-ui);
+    line-height: 1.6;
+    color: var(--color-text-primary);
+
+    color-scheme: light dark;
+    background: var(--color-main-bg);
+  }
+  body {
+    margin: 0;
+  }
+  a {
+    color: var(--color-action-text);
+    text-underline-offset: 0.2em;
+  }
+  a:hover {
+    text-decoration-thickness: 2px;
+  }
+  button,
+  input,
+  select,
+  textarea {
+    font: inherit;
+  }
+
+  button {
+    cursor: pointer;
+  }
+
+  img,
+  svg {
+    max-width: 100%;
+    height: auto;
+  }
+
+  h1,
+  h2,
+  h3,
+  p {
+    margin-top: 0;
+  }
+
+  h1,
+  h2,
+  h3 {
+    line-height: 1.2;
+    letter-spacing: -0.025em;
+  }
+
+  h1 {
+    font-size: clamp(3.2rem, 5vw, 5rem);
+    font-weight: 900;
+    line-height: 1.1;
+    text-wrap: balance;
+  }
+
+  h2 {
+    font-size: clamp(1.6rem, 3vw, 2.3rem);
+  }
+
+  :focus-visible {
+    outline: 3px solid var(--color-focus-ring);
+    outline-offset: 5px;
+  }
+  main {
+    max-width: var(--max-content-width);
+    margin: auto;
+    padding: var(--space-xxl) var(--space-l);
+  }
+  code {
+    font-family: var(--font-mono);
+    font-size: var(--fs-s);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      scroll-behavior: auto !important;
+      transition-duration: 0.01ms !important;
+      animation-duration: 0.01ms !important;
+    }
+  }
+}

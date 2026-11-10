@@ -1,0 +1,41 @@
+---
+import type { CalloutAnchor } from "./note-list-data";
+import type { Tone } from "../../shared/tones";
+import styles from "./note-list.module.css";
+
+interface Props {
+  anchor: CalloutAnchor;
+  label: string;
+  all: boolean;
+}
+const { anchor, label, all } = Astro.props;
+const keyTones: readonly Tone[] = ["green", "yellow", "blue"];
+---
+
+<li
+  data-callout={anchor}
+  data-all={String(all)}
+  class:list={[styles.label, anchor === "default-folder" && styles.defaultFolder]}
+>
+  <span aria-hidden="true" class={styles.key}>
+    {anchor === "tint" && (
+      <>
+        {keyTones.map((tone) => (
+          <span class={styles.dot} style={{ "--_dot": `var(--color-tone-${tone})` }} />
+        ))}
+      </>
+    )}
+    {anchor === "move" && <span class={styles.chip}>Move To…</span>}
+    {anchor.endsWith("folder") && (
+      <svg
+        class:list={[styles.icon, anchor === "custom-folder" && styles.blue]}
+        viewBox="0 0 16 15"
+        width="16"
+        height="15"
+      >
+        <use href="#note-list-folder" />
+      </svg>
+    )}
+  </span>
+  {label}
+</li>

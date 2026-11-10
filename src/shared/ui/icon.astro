@@ -1,0 +1,69 @@
+---
+import styles from "./icon.module.css";
+
+type Shape = { d: string } | { cx: number; cy: number; r: number; kind?: "dot" | "solid" };
+const shapes = {
+  tint: [
+    {
+      d: "M8 2C4.4 2 1.5 4.6 1.5 7.8c0 3 2.6 5.7 5.6 5.7 1 0 1.4-.6 1.4-1.3 0-.9-.6-1.2-.6-2 0-.7.6-1.2 1.4-1.2h1.6c2 0 3.6-1.4 3.6-3.3C14.5 3.6 11.6 2 8 2Z",
+    },
+    { cx: 4.6, cy: 7.8, r: 0.6, kind: "dot" },
+    { cx: 6.2, cy: 5, r: 0.6, kind: "dot" },
+    { cx: 9.4, cy: 4.6, r: 0.6, kind: "dot" },
+    { cx: 11.7, cy: 6.6, r: 0.6, kind: "dot" },
+  ],
+  list: [
+    { d: "M6.5 4h7M6.5 8h7M6.5 12h7" },
+    { cx: 3, cy: 4, r: 0.6, kind: "dot" },
+    { cx: 3, cy: 8, r: 0.6, kind: "dot" },
+    { cx: 3, cy: 12, r: 0.6, kind: "dot" },
+  ],
+  new: [{ d: "M8 3v10M3 8h10" }],
+  trash: [
+    {
+      d: "M2.8 4.5h10.4M6 4.5V2.8h4v1.7M4.4 4.5l.7 8.7a1 1 0 0 0 1 .8h3.8a1 1 0 0 0 1-.8l.7-8.7",
+    },
+  ],
+  more: [
+    { cx: 8, cy: 8, r: 6.5 },
+    { cx: 5, cy: 8, r: 0.7, kind: "solid" },
+    { cx: 8, cy: 8, r: 0.7, kind: "solid" },
+    { cx: 11, cy: 8, r: 0.7, kind: "solid" },
+  ],
+  search: [{ cx: 6.8, cy: 6.8, r: 4.6 }, { d: "m10.2 10.2 4 4" }],
+  compose: [{ d: "M13 8.5V13a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h4.5M7 9l6.5-6.5" }],
+} satisfies Record<string, Shape[]>;
+
+export type IconName = keyof typeof shapes;
+
+interface Props {
+  name: IconName;
+  class?: string;
+
+  stroke?: number;
+}
+const { name, class: className, stroke = 1.3 } = Astro.props;
+const list: readonly Shape[] = shapes[name];
+---
+
+<svg
+  aria-hidden="true"
+  viewBox="0 0 16 16"
+  width="16"
+  height="16"
+  class:list={[styles.icon, className]}
+  style={{ "--_stroke": stroke }}
+>
+  {list.map((shape) =>
+    "d" in shape ? (
+      <path d={shape.d} />
+    ) : (
+      <circle
+        cx={shape.cx}
+        cy={shape.cy}
+        r={shape.r}
+        class:list={[shape.kind && styles[shape.kind]]}
+      />
+    ),
+  )}
+</svg>

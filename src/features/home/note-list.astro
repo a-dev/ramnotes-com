@@ -1,0 +1,119 @@
+---
+import ArrowHead from "../../shared/ui/arrow-head.astro";
+import Icon from "../../shared/ui/icon.astro";
+import TrafficLights from "../../shared/ui/traffic-lights.astro";
+import NoteListCallout from "./note-list-callout.astro";
+import NoteListRow from "./note-list-row.astro";
+import styles from "./note-list.module.css";
+
+import { notes, OPEN, SELECTED, sorts, startCallouts, endCallouts } from "./note-list-data";
+---
+
+<figure data-note-list class={styles.list}>
+  <ul class:list={[styles.labels, styles.start]}>
+    {startCallouts.map((c) => (
+      <NoteListCallout {...c} />
+    ))}
+  </ul>
+
+  <div class={styles.window}>
+    <div class={styles.header}>
+      <div class={styles.titlebar}>
+        <TrafficLights />
+        <span class={styles.title}>Note list</span>
+        <span aria-hidden="true" class={styles.actions}>
+          <span class={styles.bezel}>
+            <Icon name="more" stroke={1.2} />
+          </span>
+          <span class={styles.bezel}>
+            <span class={styles.settings} />
+          </span>
+        </span>
+      </div>
+      <div aria-hidden="true" class={styles.tools}>
+        <span class={styles.search}>
+          <Icon name="search" stroke={1.2} />
+          Search notes
+        </span>
+        <span class={styles.create}>
+          <Icon name="compose" stroke={1.2} />
+          New Note
+        </span>
+      </div>
+      <div class={styles.meta}>
+        <button
+          type="button"
+          data-sort-trigger
+          aria-haspopup="menu"
+          aria-expanded="false"
+          aria-controls="note-list-sort"
+          class={styles.sort}
+        >
+          <span data-sort-name>{sorts[0].name}</span>
+          <svg aria-hidden="true" class={styles.chevron} viewBox="0 0 10 6" width="10" height="6">
+            <path d="M1 1l4 4 4-4" />
+          </svg>
+        </button>
+        <span class={styles.count}>{notes.length} notes · 1 selected</span>
+      </div>
+    </div>
+
+    <ol data-rows class={styles.rows}>
+      {notes.map((n) => (
+        <NoteListRow note={n} open={n.id === OPEN} selected={n.id === SELECTED} />
+      ))}
+    </ol>
+  </div>
+
+  <ul class:list={[styles.labels, styles.end]}>
+    {endCallouts.map((c) => (
+      <NoteListCallout {...c} />
+    ))}
+  </ul>
+
+  <svg aria-hidden="true" class={styles.arrows}>
+    <defs>
+      <symbol id="note-list-folder" viewBox="0 0 16 15">
+        <path d="M1.5 3.5a1 1 0 0 1 1-1h3.4l1.6 1.6h6a1 1 0 0 1 1 1v6.9a1 1 0 0 1-1 1h-11a1 1 0 0 1-1-1Z" />
+        <path d="M1.5 6h13" />
+      </symbol>
+      <ArrowHead id="note-list-head" />
+      <ArrowHead id="note-list-head-hot" class={styles.hot} />
+    </defs>
+  </svg>
+
+  <div
+    id="note-list-sort"
+    role="menu"
+    aria-label="Sort notes"
+    hidden
+    class:list={[styles.menu, styles.sortMenu]}
+  >
+    {sorts.map((s, i) => (
+      <button
+        type="button"
+        role="menuitemradio"
+        aria-checked={i === 0 ? "true" : "false"}
+        data-sort={s.id}
+        class={styles.item}
+      >
+        {s.name}
+      </button>
+    ))}
+  </div>
+
+  <ul data-context-menu aria-label="Note menu" class:list={[styles.menu, styles.contextMenu]}>
+    <li class={styles.item}>Open</li>
+    <li class={styles.item}>Show in Finder</li>
+    <li data-anchor="move" class={styles.item}>
+      Move To…
+    </li>
+    <li class:list={[styles.item, styles.danger]} data-danger>
+      Move to Trash…
+    </li>
+  </ul>
+</figure>
+
+<script>
+  import "./note-list-client";
+</script>

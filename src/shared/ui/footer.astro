@@ -1,0 +1,18 @@
+---
+import { site } from "../../site.config";
+import styles from "./footer.module.css";
+
+const year = new Date().getFullYear();
+---
+
+<footer class={styles.root}>
+  <span>
+    MIT License, {year} • built by <a href="https://github.com/a-dev">@a-dev</a>
+  </span>
+  <nav aria-label="Footer" class={styles.nav}>
+    <a href="/help">Help</a>
+    <a href="/privacy">Privacy</a>
+    <a href="/support">Support</a>
+    <a href={site.githubUrl}>GitHub</a>
+  </nav>
+</footer>

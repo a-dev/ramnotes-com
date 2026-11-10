@@ -1,0 +1,18 @@
+export const site = {
+  name: "RAMnotes",
+  url: "https://ramnotes.com",
+  tagline: "A little space for what’s on your mind.",
+  contactEmail: "support@ramnotes.com",
+  publisherName: "a-dev",
+  appStoreUrl: "",
+  githubRepo: "a-dev/ramnotes",
+  githubUrl: "https://github.com/a-dev/ramnotes",
+  releasesUrl: "https://github.com/a-dev/ramnotes/releases",
+  homebrewCommand: "brew install --cask a-dev/tap/ramnotes",
+  web3FormsAccessKey: "e694ec85-598e-4177-9a42-95787735799d",
+  web3FormsUrl: "https://api.web3forms.com/submit",
+  analyticsToken: "d2bc5b791a7f4cf3b8b6736545976161",
+  analyticsScriptUrl: "https://static.cloudflareinsights.com/beacon.min.js",
+  minimumMacOS: "macOS 27",
+  architecture: "Apple Silicon",
+} as const;

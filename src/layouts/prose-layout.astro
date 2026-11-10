@@ -1,0 +1,32 @@
+---
+import BaseLayout from "./base-layout.astro";
+import styles from "./prose-layout.module.css";
+interface Props {
+  title: string;
+  description: string;
+  updated: Date;
+  draft?: boolean;
+}
+const { title, description, updated, draft } = Astro.props;
+---
+
+<BaseLayout title={title} description={description} noindex={draft}>
+  <article class={styles.article}>
+    <h1>{title}</h1>
+    <p class={styles.updated}>
+      Updated{" "}
+      <time datetime={updated.toISOString().slice(0, 10)}>
+        {updated.toLocaleDateString("en-US", {
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+          timeZone: "UTC",
+        })}
+      </time>
+    </p>
+    {draft && <p class={styles.notice}>Coming soon. This article is still being written.</p>}
+    <div class={styles.prose}>
+      <slot />
+    </div>
+  </article>
+</BaseLayout>

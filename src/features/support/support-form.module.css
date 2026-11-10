@@ -1,0 +1,68 @@
+@layer ui {
+  .form {
+    display: grid;
+    gap: var(--space-l);
+  }
+  .field {
+    display: grid;
+    gap: var(--space-xs);
+  }
+  .label {
+    font-weight: 600;
+  }
+  .input,
+  .select,
+  .textarea {
+    width: 100%;
+    min-width: 0;
+    padding: var(--space-s);
+    border: 1px solid var(--color-border-subtle);
+    border-radius: var(--space-xs);
+
+    color: var(--color-text-primary);
+
+    background: var(--color-main-bg);
+  }
+  .textarea {
+    resize: vertical;
+  }
+  .field > .hint,
+  .privacy {
+    font-size: var(--fs-s);
+    color: var(--color-text-secondary);
+  }
+  .field-error:empty {
+    display: none;
+  }
+  .honeypot {
+    position: absolute;
+    left: -10000px;
+
+    overflow: hidden;
+
+    width: 1px;
+    height: 1px;
+  }
+  .button {
+    justify-self: start;
+
+    padding: var(--space-s) var(--space-l);
+    border: 1px solid var(--color-action-text);
+    border-radius: var(--space-xs);
+
+    font-weight: 600;
+    color: var(--color-action-text);
+
+    background: var(--color-note-blue);
+  }
+  .button:disabled {
+    cursor: default;
+    opacity: 0.65;
+  }
+  .result {
+    margin: 0;
+  }
+  .result:empty {
+    display: none;
+  }
+}

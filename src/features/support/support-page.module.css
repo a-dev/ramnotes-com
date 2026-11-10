@@ -1,0 +1,9 @@
+@layer ui {
+  .support {
+    max-width: 68ch;
+    margin: auto;
+  }
+  .section {
+    margin-top: var(--space-xl);
+  }
+}

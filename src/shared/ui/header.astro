@@ -1,0 +1,27 @@
+---
+import Logo from "./logo.astro";
+import styles from "./header.module.css";
+const isHome = ["/", "/index.html"].includes(Astro.url.pathname);
+---
+
+<div class={styles.container} data-home={isHome || undefined}>
+  <header class={styles.root} data-home={isHome || undefined}>
+    <a href="/" aria-label="RAMnotes home" class={styles.link}>
+      <Logo class={styles.logo} />
+    </a>
+  </header>
+</div>
+
+<script is:inline>
+  if (!CSS.supports("(animation-timeline: scroll()) and (animation-range: 0% 100%)")) {
+    const header = document.querySelector("header[data-home]");
+    if (header) {
+      const updateLogo = () => {
+        const progress = Math.min(1, Math.max(0, window.scrollY / 200));
+        header.style.setProperty("--_logo-scale", String(1 - progress * (1 - 100 / 432)));
+      };
+      updateLogo();
+      window.addEventListener("scroll", updateLogo, { passive: true });
+    }
+  }
+</script>

@@ -1,0 +1,11 @@
+---
+import { getEntry, render } from "astro:content";
+import ArticlePage from "../features/article/article-page.astro";
+const entry = await getEntry("pages", "help");
+if (!entry) throw new Error("Missing help content");
+const { Content, headings } = await render(entry);
+---
+
+<ArticlePage {...entry.data} headings={headings.filter((heading) => heading.depth === 2)}>
+  <Content />
+</ArticlePage>
