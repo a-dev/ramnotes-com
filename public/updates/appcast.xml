@@ -1,9 +1,15 @@
-<?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0" xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle">
-  <channel>
-    <title>RAMnotes Updates</title>
-    <link>https://ramnotes.com/</link>
-    <description>Updates for RAMnotes for Mac.</description>
-    <language>en</language>
-  </channel>
+<?xml version="1.0" standalone="yes"?>
+<rss xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle" version="2.0">
+    <channel>
+        <title>RAMnotes</title>
+        <item>
+            <title>1.0.0</title>
+            <pubDate>Wed, 11 Nov 2026 17:20:53 +0400</pubDate>
+            <link>https://ramnotes.com/</link>
+            <sparkle:version>1</sparkle:version>
+            <sparkle:shortVersionString>1.0.0</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>27.0</sparkle:minimumSystemVersion>
+            <enclosure url="https://ramnotes.com/updates/RAMnotes-1.0.0.dmg" length="4184337" type="application/octet-stream" sparkle:edSignature="k34httkvb+RW9l/IWxhntFLMN5mvmf2Eafz88JeHtzKCdJJ9o0NfiX/dFSvdHiKh2rf5czvwBkYkAuHsJQPWDQ=="/>
+        </item>
+    </channel>
 </rss>
