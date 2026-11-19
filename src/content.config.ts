@@ -6,6 +6,7 @@ import { site } from "./site.config";
 
 const schema = z.object({
   title: z.string(),
+  headline: z.string().optional(),
   description: z.string(),
   updated: z.coerce.date(),
   draft: z.boolean().optional(),

@@ -10,6 +10,7 @@ import { patchCssModules } from "vite-css-modules";
 
 import { sharedViteConfig } from "./vite.shared.ts";
 import { rehypeFootnotePopovers } from "./src/lib/rehype-footnote-popovers.ts";
+import { rehypeExternalLinks } from "./src/lib/rehype-external-links.ts";
 
 export default defineConfig({
   site: site.url,
@@ -37,7 +38,7 @@ export default defineConfig({
           };
         },
       ],
-      rehypePlugins: [rehypeFootnotePopovers],
+      rehypePlugins: [rehypeFootnotePopovers, [rehypeExternalLinks, { siteUrl: site.url }]],
       remarkRehype: { footnoteLabel: "Notes", footnoteLabelProperties: {} },
     }),
   },

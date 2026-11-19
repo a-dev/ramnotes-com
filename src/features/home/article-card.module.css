@@ -1,0 +1,66 @@
+@layer ui {
+  .card {
+    position: relative;
+
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: var(--space-l);
+    align-items: center;
+
+    padding: var(--space-xl);
+    border: 1px solid color-mix(in srgb, var(--color-tone-blue) 25%, transparent);
+    border-radius: var(--space-m);
+
+    color: var(--color-text-primary);
+    text-decoration: none;
+
+    background: var(--color-note-blue);
+  }
+  .card:focus-visible {
+    outline: 2px solid var(--color-focus-ring);
+    outline-offset: var(--space-xxs);
+  }
+  .body {
+    display: grid;
+    gap: var(--space-xs);
+  }
+  .eyebrow {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--color-action-text);
+    text-transform: uppercase;
+  }
+  .title {
+    font-size: var(--fs-xxl);
+    font-weight: 900;
+    line-height: 1;
+  }
+  .text {
+    font-size: var(--fs-m);
+    color: var(--color-text-secondary);
+  }
+  .arrow {
+    display: grid;
+    place-items: center;
+
+    aspect-ratio: 1;
+    width: calc(var(--space-xxl));
+    border-radius: 50%;
+
+    font-size: var(--fs-l);
+    font-weight: 700;
+    color: var(--color-white);
+
+    background: var(--color-tone-blue);
+
+    transition: transform 0.2s ease;
+  }
+  .card:hover .arrow {
+    transform: translateX(var(--space-xs));
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .arrow {
+      transition: none;
+    }
+  }
+}

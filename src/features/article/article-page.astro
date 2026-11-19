@@ -4,12 +4,13 @@ import BaseLayout from "../../layouts/base-layout.astro";
 import styles from "./article-page.module.css";
 interface Props {
   title: string;
+  headline?: string;
   description: string;
   updated: Date;
   draft?: boolean;
   headings: MarkdownHeading[];
 }
-const { title, description, updated, draft, headings } = Astro.props;
+const { title, headline, description, updated, draft, headings } = Astro.props;
 ---
 
 <BaseLayout title={title} description={description} noindex={draft}>
@@ -30,7 +31,7 @@ const { title, description, updated, draft, headings } = Astro.props;
     </nav>
     <article class={styles.article}>
       <header class={styles.header}>
-        <h1 class={styles.title}>{title}</h1>
+        <h1 class={styles.title}>{headline ?? title}</h1>
         <p class={styles.meta}>
           <time datetime={updated.toISOString().slice(0, 10)}>
             {updated.toLocaleDateString("en-US", {

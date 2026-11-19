@@ -1,0 +1,20 @@
+---
+import styles from "./article-card.module.css";
+interface Props {
+  href: string;
+  title: string;
+  text: string;
+}
+const { href, title, text } = Astro.props;
+---
+
+<a href={href} class={styles.card}>
+  <span class={styles.body}>
+    <span class={styles.eyebrow}>Read the article</span>
+    <span class={styles.title}>{title}</span>
+    <span class={styles.text}>{text}</span>
+  </span>
+  <span class={styles.arrow} aria-hidden="true">
+    →
+  </span>
+</a>
