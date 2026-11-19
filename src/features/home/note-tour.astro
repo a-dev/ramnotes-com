@@ -94,7 +94,13 @@ import { tones, sizes, START_TONE, callouts } from "./note-tour-data";
     <p>QUICK TO OPEN</p>
     <p>
       Links in a note work like in a code editor. Hold ⌘ and hover a link, such as{" "}
-      <a data-link href="https://www.google.com/" class={styles.link}>
+      <a
+        data-link
+        href="https://www.google.com/"
+        target="_blank"
+        rel="noopener"
+        class={styles.link}
+      >
         https://www.google.com/
       </a>
       , then click to open it.

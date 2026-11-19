@@ -78,13 +78,67 @@
     text-wrap: balance;
   }
   .prose :global(h3) {
+    --_dot: var(--color-tone-blue);
+
     scroll-margin-top: var(--space-xl);
 
-    margin: var(--space-xl) 0 var(--space-s);
+    display: flex;
+    gap: var(--space-s);
+    align-items: center;
+
+    margin: var(--space-xxl) 0 var(--space-m);
 
     font-family: var(--font-ui);
-    font-size: var(--fs-l);
+    font-size: clamp(var(--fs-xl), 2.2vw, var(--fs-xxl));
+    font-weight: 800;
     text-wrap: balance;
+  }
+  .prose :global(h2 + h3) {
+    margin-top: var(--space-l);
+  }
+
+  /* A tilted sticky note before the name and a rule after it. Tones follow the card order. */
+  .prose :global(h3::before) {
+    content: "";
+
+    rotate: -8deg;
+
+    flex: none;
+
+    width: 0.8em;
+    height: 0.8em;
+    border-radius: 0.2em;
+
+    background: var(--_dot);
+    box-shadow: 0 2px 6px var(--color-shadow-light);
+  }
+  .prose :global(h3::after) {
+    content: "";
+
+    flex: 1;
+
+    min-width: var(--space-l);
+    height: 1px;
+
+    background: var(--color-border-subtle);
+  }
+  .prose :global(h3:nth-of-type(6n + 2)) {
+    --_dot: var(--color-tone-yellow);
+  }
+  .prose :global(h3:nth-of-type(6n + 3)) {
+    --_dot: var(--color-tone-green);
+  }
+  .prose :global(h3:nth-of-type(6n + 4)) {
+    --_dot: var(--color-tone-red);
+  }
+  .prose :global(h3:nth-of-type(6n + 5)) {
+    --_dot: var(--color-tone-purple);
+  }
+  .prose :global(h3:nth-of-type(6n)) {
+    --_dot: var(--color-tone-gray);
+  }
+  .prose :global(h3:nth-of-type(even)::before) {
+    rotate: 6deg;
   }
   .prose :global(:is(ul, ol)) {
     margin: 0 0 1.25em;
@@ -102,11 +156,15 @@
   .prose :global(table) {
     overflow-x: auto;
     display: block;
-    border-collapse: collapse;
+    border-spacing: 0;
+    border-collapse: separate;
 
     margin-bottom: 1.25em;
+    border: 1px solid var(--color-border-subtle);
+    border-radius: var(--rounded-m);
 
     font: var(--fs-m) / 1.5 var(--font-ui);
+    font-variant-numeric: tabular-nums;
   }
   .prose :global(th),
   .prose :global(td) {
@@ -117,11 +175,276 @@
   }
   .prose :global(th) {
     font-weight: 600;
-    color: var(--color-text-secondary);
+    background: var(--color-note-gray);
   }
-  .prose :global(th:first-child),
+  .prose :global(tr:last-child td) {
+    border-bottom: 0;
+  }
+  .prose :global(:is(th, td):first-child) {
+    position: sticky;
+    inset-inline-start: 0;
+    font-weight: 600;
+  }
   .prose :global(td:first-child) {
-    padding-inline-start: 0;
+    background: var(--color-main-bg);
+  }
+  .prose :global(td a) {
+    text-decoration: none;
+  }
+
+  /* Note tints for article blocks, as in the app. */
+  .prose :global([data-tone]) {
+    --_fill: var(--color-note-none);
+    --_dot: var(--color-border-subtle);
+  }
+  .prose :global([data-tone="gray"]) {
+    --_fill: var(--color-note-gray);
+    --_dot: var(--color-tone-gray);
+  }
+  .prose :global([data-tone="blue"]) {
+    --_fill: var(--color-note-blue);
+    --_dot: var(--color-tone-blue);
+  }
+  .prose :global([data-tone="green"]) {
+    --_fill: var(--color-note-green);
+    --_dot: var(--color-tone-green);
+  }
+  .prose :global([data-tone="yellow"]) {
+    --_fill: var(--color-note-yellow);
+    --_dot: var(--color-tone-yellow);
+  }
+  .prose :global([data-tone="red"]) {
+    --_fill: var(--color-note-red);
+    --_dot: var(--color-tone-red);
+  }
+  .prose :global([data-tone="purple"]) {
+    --_fill: var(--color-note-purple);
+    --_dot: var(--color-tone-purple);
+  }
+
+  .prose :global([data-note]) {
+    margin: 0 0 1.25em;
+    padding: var(--space-l);
+    border: 1px solid var(--color-border-subtle);
+    border-radius: var(--rounded-m);
+
+    font: var(--fs-m) / 1.6 var(--font-ui);
+
+    background: var(--_fill);
+  }
+  .prose :global([data-note] > :last-child) {
+    margin-bottom: 0;
+  }
+  .prose :global([data-label]) {
+    display: flex;
+    gap: var(--space-xs);
+    align-items: start;
+
+    margin-bottom: var(--space-s);
+
+    font-weight: 600;
+  }
+  .prose :global([data-label]::before) {
+    content: "";
+
+    flex: none;
+
+    width: 8px;
+    height: 8px;
+    margin-top: calc((1lh - 8px) / 2);
+    border-radius: var(--rounded-pill);
+
+    background: var(--_dot);
+  }
+
+  .prose :global([data-cards]) {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 13rem), 1fr));
+    gap: var(--space-s);
+
+    margin: 0 0 1.25em;
+
+    font: var(--fs-s) / 1.45 var(--font-ui);
+  }
+  .prose :global([data-card]) {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-s);
+    justify-content: space-between;
+
+    padding: var(--space-m);
+    border: 1px solid var(--color-border-subtle);
+    border-radius: var(--rounded-m);
+
+    color: var(--color-text-primary);
+    text-decoration: none;
+
+    background: var(--_fill);
+
+    transition:
+      translate 0.15s,
+      box-shadow 0.15s;
+  }
+  .prose :global(a[data-card]:hover) {
+    translate: 0 -2px;
+    box-shadow: var(--shadow-popup);
+  }
+  .prose :global([data-card] strong) {
+    display: flex;
+    gap: var(--space-xs);
+    align-items: start;
+    font-size: var(--fs-m);
+  }
+  .prose :global([data-card] strong::before) {
+    content: "";
+
+    flex: none;
+
+    width: 8px;
+    height: 8px;
+    margin-top: calc((1lh - 8px) / 2);
+    border-radius: var(--rounded-pill);
+
+    background: var(--_dot);
+  }
+  .prose :global(div[data-card]) {
+    justify-content: start;
+  }
+
+  .prose :global([data-facts]) {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    gap: var(--space-xs) var(--space-l);
+
+    margin: 0 0 1.25em;
+    padding: var(--space-m) var(--space-l);
+    border-radius: var(--rounded-m);
+
+    font: var(--fs-m) / 1.5 var(--font-ui);
+
+    background: var(--color-note-gray);
+  }
+  .prose :global([data-facts] dt) {
+    font-weight: 600;
+  }
+  .prose :global([data-facts] dd) {
+    margin: 0;
+  }
+
+  .prose :global([data-split]) {
+    display: grid;
+    gap: var(--space-m);
+    margin: 0 0 1.25em;
+  }
+  .prose :global([data-split] > [data-note]) {
+    margin: 0;
+  }
+
+  .prose :global([data-stickies]) {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 9rem), 1fr));
+    gap: var(--space-m);
+
+    margin: var(--space-l) 0 var(--space-xl);
+    padding: 0;
+
+    list-style: none;
+  }
+  .prose :global([data-stickies] li) {
+    rotate: -1.5deg;
+
+    min-height: 7rem;
+    margin: 0;
+    padding: var(--space-m);
+    border: 1px solid var(--color-border-subtle);
+    border-radius: var(--rounded-m);
+
+    font: var(--font-note);
+
+    background: var(--_fill);
+    box-shadow: var(--shadow-popup);
+  }
+  .prose :global([data-stickies] li:nth-child(even)) {
+    rotate: 1deg;
+  }
+  .prose :global([data-stickies] [data-size="large"]) {
+    font-size: var(--fs-l);
+    font-weight: 700;
+    line-height: 1.3;
+  }
+
+  .prose :global([data-steps]) {
+    counter-reset: step;
+    padding: 0;
+    list-style: none;
+  }
+  .prose :global([data-steps] > li) {
+    counter-increment: step;
+    position: relative;
+    padding-inline-start: 2.25em;
+  }
+  .prose :global([data-steps] > li + li) {
+    margin-top: var(--space-s);
+  }
+  .prose :global([data-steps] > li::before) {
+    content: counter(step);
+
+    position: absolute;
+    inset-block-start: 0.5em;
+    inset-inline-start: 0;
+
+    display: grid;
+    place-items: center;
+
+    width: 1.5em;
+    height: 1.5em;
+    border-radius: var(--rounded-pill);
+
+    font: 600 var(--fs-s) / 1 var(--font-ui);
+    color: var(--color-action-text);
+
+    background: color-mix(in srgb, var(--color-action) 12%, transparent);
+  }
+
+  .prose :global([data-faq]) {
+    border-bottom: 1px solid var(--color-border-subtle);
+  }
+  .prose :global(:not([data-faq]) + [data-faq]) {
+    border-top: 1px solid var(--color-border-subtle);
+  }
+  .prose :global([data-faq] summary) {
+    cursor: pointer;
+
+    display: flex;
+    gap: var(--space-m);
+    justify-content: space-between;
+
+    padding: var(--space-m) 0;
+
+    font: 600 var(--fs-l) / 1.35 var(--font-ui);
+    list-style: none;
+  }
+  .prose :global([data-faq] summary::-webkit-details-marker) {
+    display: none;
+  }
+  .prose :global([data-faq] summary::after) {
+    content: "+";
+
+    flex: none;
+
+    font-weight: 400;
+    color: var(--color-text-secondary);
+
+    transition: rotate 0.2s;
+  }
+  .prose :global([data-faq][open] summary::after) {
+    rotate: 45deg;
+  }
+  .prose :global([data-faq] > p:last-child) {
+    margin-bottom: var(--space-m);
+  }
+  .prose :global([data-faq] + p) {
+    margin-top: var(--space-xl);
   }
   .prose :global(kbd) {
     padding: 0 0.35em;
@@ -292,9 +615,22 @@
     }
   }
 
+  @media (width > 760px) {
+    .prose :global([data-split]) {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
   @media (width <= 520px) {
     .prose {
       font-size: var(--fs-m);
+    }
+    .prose :global([data-facts]) {
+      grid-template-columns: 1fr;
+      gap: 0;
+    }
+    .prose :global([data-facts] dd + dt) {
+      margin-top: var(--space-xs);
     }
   }
 
